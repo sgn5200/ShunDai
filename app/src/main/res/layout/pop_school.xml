@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#8ec6a8"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvPopSchool"
+        android:layout_width="match_parent"
+        android:text="我的学校"
+        android:gravity="center"
+        android:layout_height="50dp" />
+
+    <View
+        android:background="@android:color/black"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+    <TextView
+        android:id="@+id/tvPopOther"
+        android:layout_width="match_parent"
+        android:text="其他学校"
+        android:gravity="center"
+        android:layout_height="50dp" />
+</LinearLayout>

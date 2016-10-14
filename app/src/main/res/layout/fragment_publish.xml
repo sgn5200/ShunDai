@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#aadaf9e6">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:id="@+id/titleMsg"
+            style="@style/titileBar"
+            android:text="title" />
+
+        <ImageView
+            android:id="@+id/ivSpiner"
+            android:src="@mipmap/back_blue"
+            android:layout_width="@dimen/px_30.0_dp"
+            android:layout_height="@dimen/px_30.0_dp"
+            android:layout_alignTop="@+id/titleMsg"
+            android:layout_toRightOf="@+id/titleMsg"
+            android:layout_toEndOf="@+id/titleMsg" />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:src="@mipmap/write_blue"
+            android:layout_width="@dimen/px_30.0_dp"
+            android:layout_height="@dimen/px_30.0_dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvPublish"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

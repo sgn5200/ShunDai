@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#daf9e6"
+    android:paddingTop="@dimen/px_10.0_dp">
+
+    <include layout="@layout/user_item" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginLeft="@dimen/px_80.0_dp"
+        android:layout_marginTop="@dimen/px_5.0_dp"
+        android:text="message1111111111111111111111"
+        android:textSize="@dimen/px_20.0_dp"/>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000"
+        android:layout_below="@+id/tvMessage" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_below="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_30.0_dp">
+
+
+        <TextView
+            android:id="@+id/tvInfoLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_50.0_dp"/>
+
+
+        <View
+            android:layout_width="2px"
+            android:layout_centerHorizontal="true"
+            android:layout_height="match_parent"
+            android:background="#000" />
+
+        <TextView
+            android:id="@+id/tvInfoRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:layout_marginRight="@dimen/px_50.0_dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_below="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="#000"/>
+
+</RelativeLayout>
