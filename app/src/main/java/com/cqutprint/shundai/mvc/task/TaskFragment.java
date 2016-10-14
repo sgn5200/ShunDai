@@ -50,17 +50,19 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
         return fragment;
     }
 
-    @Override
-    public int getRootLayoutId() {
-        return R.layout.fragment_task;
+    public TaskFragment(){
+        TAG=getClass().getSimpleName();
     }
 
 
     @Override
+    public int getRootLayoutId() {
+        return R.layout.fragment_task;
+    }
+    @Override
     protected void initView() {
         recyclerView = bind(R.id.rvTask);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         initRefreshHeader();
 
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.recycler_header, null);
@@ -71,39 +73,32 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
         adapter.setFooterView(footer);
         recyclerView.setAdapter(adapter);
 
-        initRefreshHeader();
-
     }
 
     //设置下拉的头部
-    private View initRefreshHeader() {
+    private void initRefreshHeader() {
         pullLayout=bind(R.id.pullLayout);
         pullLayout.setOnRefreshListener(this);
         pullLayout.setFinishRefreshToPauseDuration(800);
 
-        View headerView=pullLayout.setRefreshView(R.layout.layout_header);
-
-        progressBar = (ProgressBar) headerView.findViewById(R.id.pb_view);
-        tvLoad = (TextView) headerView.findViewById(R.id.text_view);
+        //设置下拉头
+        View pullRefresh=pullLayout.setRefreshView(R.layout.layout_pull_refresh);
+        progressBar = (ProgressBar) pullRefresh.findViewById(R.id.pb_view);
+        tvLoad = (TextView) pullRefresh.findViewById(R.id.text_view);
         tvLoad.setText("下拉刷新");
-        ivLoad = (ImageView) headerView.findViewById(R.id.image_view);
+        ivLoad = (ImageView) pullRefresh.findViewById(R.id.image_view);
         ivLoad.setVisibility(View.VISIBLE);
         ivLoad.setImageResource(R.mipmap.v2female);
-        ivLoadOk=(ImageView)headerView.findViewById(R.id.img_done);
+        ivLoadOk=(ImageView)pullRefresh.findViewById(R.id.img_done);
         ivLoadOk.setImageResource(R.mipmap.v2type1);
         ivLoadOk.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
-        return headerView;
     }
 
     //  设置布局中的头
     private void setHeader(View header) {
         pager = (ViewPager) header.findViewById(R.id.viewPager);
-        ivIndicator = new View[]{
-                header.findViewById(R.id.ivIndicator1),
-                header.findViewById(R.id.ivIndicator2),
-                header.findViewById(R.id.ivIndicator3)};
-
+        ivIndicator = new View[]{ header.findViewById(R.id.ivIndicator1),header.findViewById(R.id.ivIndicator2),header.findViewById(R.id.ivIndicator3)};
         ImageView iv1 = new ImageView(getActivity());
         ImageView iv2 = new ImageView(getActivity());
         ImageView iv3 = new ImageView(getActivity());
@@ -114,24 +109,6 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
         views.add(iv1);
         views.add(iv2);
         views.add(iv3);
-        setViews();
-
-        timer = new ThreadTimer(new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Log.i(TAG, msg.what + "   ----------");
-
-                if (pager != null) {
-                    pager.setCurrentItem(msg.what % 3);
-                }
-            }
-        }, 5000);
-
-        timer.start();
-    }
-
-    private void setViews() {
         ivIndicator[0].setSelected(true);
         pager.setAdapter(SplashAdapter.getPageAdapter(views));
         pager.setCurrentItem(0);
@@ -152,6 +129,29 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
             }
         });
 
+        timer = new ThreadTimer(new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                Log.i(TAG, msg.what + "   ----------");
+                if (pager != null) {
+                    pager.setCurrentItem(msg.what % 3);
+                }
+            }
+        }, 5000);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.stop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        timer.start();
     }
 
     private ThreadTimer timer;

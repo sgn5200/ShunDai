@@ -23,7 +23,6 @@ import java.security.InvalidParameterException;
 
 public class PullRefreshLayout extends ViewGroup {
 
-    private static final int UNLIMIT_DRAG_HEIGHT = 0;
     private static final int LIMIT_DRAG_HEIGHT = 1;
     private static final int DRAG_MAX_DISTANCE = 100;
     private int mDragMode = LIMIT_DRAG_HEIGHT;
@@ -150,10 +149,6 @@ public class PullRefreshLayout extends ViewGroup {
                 View child = getChildAt(i);
                 if (child != mRefreshView) {
                     mTarget = child;
-//                    mTargetPaddingBottom = mTarget.getPaddingBottom();
-//                    mTargetPaddingLeft = mTarget.getPaddingLeft();
-//                    mTargetPaddingRight = mTarget.getPaddingRight();
-//                    mTargetPaddingTop = mTarget.getPaddingTop();
                 }
             }
         }

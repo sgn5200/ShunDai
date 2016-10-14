@@ -87,7 +87,7 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private View createRefreshView() {
-        View headerView=mPullToRefreshView.setRefreshView(R.layout.layout_header);
+        View headerView=mPullToRefreshView.setRefreshView(R.layout.layout_pull_refresh);
         progressBar = (ProgressBar) headerView.findViewById(R.id.pb_view);
         textView = (TextView) headerView.findViewById(R.id.text_view);
         textView.setText("下拉刷新");
