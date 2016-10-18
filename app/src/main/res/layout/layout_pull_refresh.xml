@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/head_container"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     android:gravity="bottom"
     android:layout_alignParentBottom="true"
-    android:background="#8E8E8E"
+    android:background="#f7f7f7"
     >
 
     <TextView
@@ -33,15 +33,4 @@
         android:layout_toLeftOf="@id/text_view"
         android:layout_toStartOf="@id/text_view"
         android:contentDescription="@null" />
-
-    <ImageView
-        android:id="@+id/img_done"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/text_view"
-        android:layout_toStartOf="@id/text_view"
-        android:contentDescription="@null" />
-
-
 </RelativeLayout>

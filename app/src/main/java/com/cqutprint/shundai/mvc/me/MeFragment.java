@@ -19,15 +19,14 @@ import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 
-public class MeFragment extends BaseFragment implements View.OnClickListener {
+public class MeFragment extends BaseFragment implements View.OnClickListener,GalleryFinal.OnHanlderResultCallback {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String TAG = getClass().getSimpleName();
     private ImageView ivPhoto,ivBackground;
 
     private static final int CAMERA = 1;// 拍照
-    private static final int GALLERY = 2;// 从相册中选择
+    private static final int GALLERY = 2;// 从相册     中选择
 
     private AlertDialog dialog;
     private View dialogView;
@@ -42,33 +41,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         return fragment;
     }
 
-    private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
-        @Override
-        public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
-            String path = resultList.get(0).getPhotoPath();
-            if(isPressBackground){
-                ShareUtils.setPhotoBackground(path);
-                ImageUtils.glideLoader(getActivity(), path, R.mipmap.default_bg, ivBackground);
-            }else{
-                ShareUtils.setPhotoUri(path);
-                ImageUtils.glideLoaderCircle(getActivity(), path, R.mipmap.default_bg, ivPhoto);
-            }
-        }
-
-        @Override
-        public void onHanlderFailure(int requestCode, String errorMsg) {
-            Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
-        }
-    };
-
     @Override
     protected void initView() {
         ivPhoto = bind(R.id.ivPhoto);
         ivBackground=bind(R.id.ivBackground);
         dialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_select_image, null);
         dialog = new AlertDialog.Builder(getActivity(), R.style.fullScreen).setCancelable(true).create();
-
-
         String pathPhoto = ShareUtils.getPhotoUri();
         String pathBackground = ShareUtils.getPhotoBackground();
 
@@ -96,13 +74,13 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
                 if (dialog != null && dialog.isShowing())
                     dialog.dismiss();
-                GalleryFinal.openCamera(CAMERA, mOnHanlderResultCallback);
+                GalleryFinal.openCamera(CAMERA, this);
                 break;
             case R.id.btPhoto:
                 if (dialog != null && dialog.isShowing())
 
                     dialog.dismiss();
-                GalleryFinal.openGallerySingle(GALLERY, mOnHanlderResultCallback);
+                GalleryFinal.openGallerySingle(GALLERY, this);
                 break;
             case R.id.ivPhoto:
                 isPressBackground=false;
@@ -119,5 +97,24 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 dialog.dismiss();
                 break;
         }
+    }
+
+
+    //调用系统相册 回调接口
+    @Override
+    public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
+        String path = resultList.get(0).getPhotoPath();
+        if(isPressBackground){
+            ShareUtils.setPhotoBackground(path);
+            ImageUtils.glideLoader(getActivity(), path, R.mipmap.default_bg, ivBackground);
+        }else{
+            ShareUtils.setPhotoUri(path);
+            ImageUtils.glideLoaderCircle(getActivity(), path, R.mipmap.default_bg, ivPhoto);
+        }
+    }
+
+    @Override
+    public void onHanlderFailure(int requestCode, String errorMsg) {
+        Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }

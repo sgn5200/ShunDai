@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.cqutprint.shundai.R;
-import com.cqutprint.shundai.RecyclerViewFragment;
 import com.cqutprint.shundai.mvc.me.MeFragment;
 import com.cqutprint.shundai.mvc.message.MessageFragment;
 import com.cqutprint.shundai.mvc.publish.PublishFragment;
@@ -32,7 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         fragments= new Fragment[]{TaskFragment.newInstance("im first","im second"),
                 PublishFragment.newInstance("9999","77777"),
                 MessageFragment.newInstance(),
-                MeFragment.newInstance("0000","+++++"),new RecyclerViewFragment()};
+                MeFragment.newInstance("0000","+++++")};
 
         tabIcons[0].setSelected(true);
         pager.setCurrentItem(0);

@@ -12,6 +12,7 @@ import com.cqutprint.shundai.base.RecyclerAdapter;
  * Created by Administrator on 2016/10/13.
  */
 public class TaskHolder extends RecyclerAdapter.BaseHolder<String> {
+
     public TaskHolder(ViewGroup parent, @LayoutRes int resId) {
         super(parent, resId);
     }

@@ -1,27 +1,27 @@
 package com.cqutprint.shundai.mvc.task;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
 import com.cqutprint.shundai.login.SplashAdapter;
-import com.cqutprint.shundai.utils.Log;
-import com.cqutprint.shundai.utils.ThreadTimer;
 import com.cqutprint.shundai.widget.PullRefreshLayout;
+import com.trello.rxlifecycle.android.FragmentEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRefreshListener{
@@ -34,12 +34,8 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
 
     RecyclerAdapter adapter;
 
-    RecyclerView recyclerView;
     PullRefreshLayout pullLayout;
-    private ProgressBar progressBar;
-    private TextView tvLoad;
-    private ImageView ivLoad;
-    private ImageView ivLoadOk;
+
 
     public static TaskFragment newInstance(String param1, String param2) {
         TaskFragment fragment = new TaskFragment();
@@ -61,38 +57,18 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
     }
     @Override
     protected void initView() {
-        recyclerView = bind(R.id.rvTask);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        initRefreshHeader();
-
-        View header = LayoutInflater.from(getActivity()).inflate(R.layout.recycler_header, null);
-        setHeader(header);
-        View footer = LayoutInflater.from(getActivity()).inflate(R.layout.recyler_footer, recyclerView, false);
-        adapter = new TaskAdapter(setList(),null);
-        adapter.setHeaderView(header);
-        adapter.setFooterView(footer);
-        recyclerView.setAdapter(adapter);
-
-    }
-
-    //设置下拉的头部
-    private void initRefreshHeader() {
         pullLayout=bind(R.id.pullLayout);
         pullLayout.setOnRefreshListener(this);
         pullLayout.setFinishRefreshToPauseDuration(800);
 
-        //设置下拉头
-        View pullRefresh=pullLayout.setRefreshView(R.layout.layout_pull_refresh);
-        progressBar = (ProgressBar) pullRefresh.findViewById(R.id.pb_view);
-        tvLoad = (TextView) pullRefresh.findViewById(R.id.text_view);
-        tvLoad.setText("下拉刷新");
-        ivLoad = (ImageView) pullRefresh.findViewById(R.id.image_view);
-        ivLoad.setVisibility(View.VISIBLE);
-        ivLoad.setImageResource(R.mipmap.v2female);
-        ivLoadOk=(ImageView)pullRefresh.findViewById(R.id.img_done);
-        ivLoadOk.setImageResource(R.mipmap.v2type1);
-        ivLoadOk.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+        View header = LayoutInflater.from(getActivity()).inflate(R.layout.recycler_header, null);
+        setHeader(header);
+        View footer = LayoutInflater.from(getActivity()).inflate(R.layout.recyler_footer, pullLayout, false);
+        adapter = new TaskAdapter(setList(),null);
+        adapter.setHeaderView(header);
+        adapter.setFooterView(footer);
+        pullLayout.setAdapter(adapter);
+
     }
 
     //  设置布局中的头
@@ -129,32 +105,29 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
             }
         });
 
-        timer = new ThreadTimer(new Handler() {
+        timerInterval();
+
+    }
+
+    /**
+     * 广告轮询播放，时间间隔2秒
+     */
+    private void timerInterval(){
+        Observable.interval(0,2, TimeUnit.SECONDS)
+                .compose(this.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Long>() {
             @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Log.i(TAG, msg.what + "   ----------");
+            public void call(Long aLong) {
                 if (pager != null) {
-                    pager.setCurrentItem(msg.what % 3);
+                    pager.setCurrentItem((int)(aLong% 3));
                 }
             }
-        }, 5000);
+        });
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        timer.stop();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        timer.start();
-    }
-
-    private ThreadTimer timer;
 
     private int mCount = 1;
 
@@ -169,39 +142,21 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        tvLoad.setText("正在刷新");
-        android.util.Log.d("TAG", "onRefresh() called with: " + "");
-        ivLoadOk.setVisibility(View.GONE);
-        ivLoad.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        pullLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pullLayout.setRefreshing(false);
-            }
-        }, 2000);
-    }
-
-    @Override
-    public void onDragDistanceChange(float distance, float percent, float offset) {
-        if (percent >= 1.0f) {
-            tvLoad.setText("松开刷新");
-            ivLoadOk.setVisibility(View.GONE);
-            ivLoad.setVisibility(View.VISIBLE);
-            ivLoad.setRotation(180);
-        } else {
-            tvLoad.setText("下拉刷新");
-            ivLoadOk.setVisibility(View.GONE);
-            ivLoad.setVisibility(View.VISIBLE);
-            ivLoad.setRotation(0);
+        if (flagIsOnLoadMore){
+            flagIsOnLoadMore=false;
+            return;
         }
+        Toast.makeText(getContext(), "刷新数据", Toast.LENGTH_SHORT).show();
+        pullLayout.setRefreshing(true);
     }
 
     @Override
-    public void onFinish() {
-        tvLoad.setText("刷新成功");
-        ivLoad.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
-        ivLoadOk.setVisibility(View.VISIBLE);
+    public void onLoadMore() {
+        flagIsOnLoadMore=true;
+        Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+        pullLayout.setRefreshing(true,true);
+
     }
+
+    boolean flagIsOnLoadMore=false;
 }
