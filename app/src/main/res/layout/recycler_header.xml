@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="150dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="150dp"
     android:orientation="vertical">
-
 
     <FrameLayout
         android:id="@+id/t1"
@@ -47,22 +45,52 @@
         </RelativeLayout>
     </FrameLayout>
 
+    <include layout="@layout/view_line" />
+
     <LinearLayout
-        android:id="@+id/t2"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_below="@id/t1"
-        android:orientation="horizontal">
+        android:layout_height="60dp">
 
-        <Button
+        <TextView
+            android:id="@+id/allTask"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="附近任务"
+            android:textSize="@dimen/px_24.0_dp" />
 
-        <Button
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/grey_line" />
+
+        <TextView
+            android:id="@+id/myPublish"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"
+
+            android:text="我的发布"
+            android:textSize="@dimen/px_24.0_dp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/grey_line" />
+
+        <TextView
+            android:id="@+id/myTask"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="我的抢单"
+            android:textSize="@dimen/px_24.0_dp" />
 
     </LinearLayout>
+
+    <include layout="@layout/view_line" />
+
 </LinearLayout>

@@ -3,6 +3,7 @@ package com.cqutprint.shundai.mvc.publish;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -28,7 +29,13 @@ public class PublishAdapter extends RecyclerAdapter<String,MyHolder> {
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyHolder(parent, R.layout.item_publish);
+
+        if(viewType==TYPE_HEADER && getHeaderView() !=null){
+            return new MyHolder(getHeaderView());
+        }else if(viewType==TYPE_FOOTER  && getFooterView() !=null){
+            return new MyHolder(getFooterView());
+        }else
+            return new MyHolder(parent, R.layout.item_publish);
     }
 
 }
@@ -37,9 +44,12 @@ class MyHolder extends RecyclerAdapter.BaseHolder<String> {
 
     TextView textView, textView2;
 
+    public MyHolder(View view){
+        super(view);
+    }
+
     public MyHolder(ViewGroup parent, @LayoutRes int resId) {
         super(parent, resId);
-
         textView = getView(R.id.tvName);
         textView2 = getView(R.id.tvMessage);
     }

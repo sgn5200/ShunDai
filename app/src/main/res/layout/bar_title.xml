@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/title"
+    android:id="@+id/titleContent"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="@dimen/px_50.0_dp"
     android:background="@color/colorPrimaryDark">
 
+    <ImageView
+        android:id="@+id/titleLeft"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="@dimen/px_5.0_dp"
+        android:layout_width="@dimen/px_50.0_dp"
+        android:layout_height="@dimen/px_50.0_dp" />
+
     <TextView
-        android:id="@+id/titleMsg"
+        android:id="@+id/tvTitle"
         style="@style/titileBar"
         android:text="title" />
+
+    <ImageView
+        android:id="@+id/titleRight"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/px_5.0_dp"
+        android:layout_width="@dimen/px_50.0_dp"
+        android:layout_height="@dimen/px_50.0_dp" />
 </RelativeLayout>

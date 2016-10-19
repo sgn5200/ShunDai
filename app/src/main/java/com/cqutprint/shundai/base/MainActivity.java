@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.mvc.me.MeFragment;
-import com.cqutprint.shundai.mvc.message.MessageFragment;
 import com.cqutprint.shundai.mvc.publish.PublishFragment;
 import com.cqutprint.shundai.mvc.task.TaskFragment;
 
@@ -25,12 +24,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
         public void initView() {
         pager=bind(R.id.viewPager);
-        tabIcons=new View[]{bind(R.id.tab1),bind(R.id.tab2),bind(R.id.tab3),bind(R.id.tab4)};
+        tabIcons=new View[]{bind(R.id.tab1),bind(R.id.tab2),bind(R.id.tab3)};
         initListener(this,tabIcons);
 
-        fragments= new Fragment[]{TaskFragment.newInstance("im first","im second"),
-                PublishFragment.newInstance("9999","77777"),
-                MessageFragment.newInstance(),
+        fragments= new Fragment[]{TaskFragment.newInstance(),
+                PublishFragment.newInstance(),
                 MeFragment.newInstance("0000","+++++")};
 
         tabIcons[0].setSelected(true);
@@ -80,9 +78,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.tab3:
                 pager.setCurrentItem(2);
-                break;
-            case R.id.tab4:
-                pager.setCurrentItem(3);
                 break;
             default:
         }

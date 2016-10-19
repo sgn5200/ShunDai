@@ -1,39 +1,38 @@
 package com.cqutprint.shundai.mvc.publish;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cqutprint.shundai.R;
-import com.cqutprint.shundai.base.RecyclerAdapter;
 import com.cqutprint.shundai.base.BaseFragment;
-import com.cqutprint.shundai.widget.SpaceItemDecoration;
+import com.cqutprint.shundai.base.RecyclerAdapter;
+import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.utils.ScreenUtil;
+import com.cqutprint.shundai.widget.CustomTitle;
+import com.cqutprint.shundai.widget.PullRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
-public class PublishFragment extends BaseFragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private RecyclerView recyclerView;
+public class PublishFragment extends BaseFragment implements PullRefreshLayout.OnRefreshListener,View.OnClickListener {
+    private PullRefreshLayout pullLayout;
+    private CustomTitle customTitle;
 
-    private ImageView ivChooiseSchool,ivEidt;
+    private TextView tvSchool;
 
-    public static PublishFragment newInstance(String param1, String param2) {
+    private  RecyclerAdapter adapter;
+    public static PublishFragment newInstance() {
         PublishFragment fragment = new PublishFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -44,42 +43,90 @@ public class PublishFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        recyclerView=bind(R.id.rvPublish);
-        ivChooiseSchool=bind(R.id.ivSpiner);
-        ivEidt=bind(R.id.ivEdit);
-
-        ivChooiseSchool.setOnClickListener(new View.OnClickListener() {
+        pullLayout=bind(R.id.recyclerPublish);
+        tvSchool=bind(R.id.tvSchool);
+        customTitle=bind(R.id.publishTitle);
+        customTitle.setText("所有","我的");
+        customTitle.addChangeListener(new CustomTitle.TitleChangeListener() {
             @Override
-            public void onClick(View v) {
-                openPopWindow(v);
+            public void changed(boolean isLeftSelected) {
+                showToast("你选了-->" +(isLeftSelected?"左边":"右边"));
             }
         });
 
-        ((TextView)bind(R.id.titleMsg)).setText("我的学校");
+        initListener(this,R.id.titleRight,R.id.ivSpiner);
 
-        // 创建布局管理器
-        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
-        //设置方向垂直
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //设置布局管理器
-        recyclerView.setLayoutManager(layoutManager);
-        List<String> listData=initData();
+        List<String> listData=initData("初始化");
+         adapter=new PublishAdapter(listData,null);
+        pullLayout.setOnRefreshListener(this);
+         pullLayout.setFinishRefreshToPauseDuration(800);
 
-        RecyclerAdapter adapter=new PublishAdapter(listData,null);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new SpaceItemDecoration(10));
+        View footer = LayoutInflater.from(getActivity()).inflate(R.layout.recyler_footer, pullLayout, false);
+        adapter.setFooterView(footer);
+        pullLayout.setAdapter(adapter);
+        pullLayout.setItemDecoration(10);
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ivSpiner:
+                openPopWindow(v);
+                break;
+            case R.id.titleRight:
+                showToast("发说说还没做");
+                break;
+        }
+    }
+
+    private List<String> initData(String msg) {
+        List<String> list=new ArrayList<>();
+        for(int i=0;i<5;i++){
+            String item="这是-publish "+ i +"  "+ msg;
+            list.add(item);
+        }
+        return list;
+    }
+
+
+    @Override
+    public void onRefresh() {
+        showToast("刷新数据");
+        pullLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void onLoadMore() {
+        Observable.just(initData("新消息")).compose(this.<List<String>>bindToLifecycle())
+                .delay(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> strings) {
+                        adapter.dataAppend(strings);
+                        pullLayout.onLoadFinish();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, throwable.getMessage());
+                    }
+                });
+
+    }
+
+
 
     PopupWindow popupWindow;
     private void openPopWindow(View v) {
-
         if(popupWindow==null){
             View popView=LayoutInflater.from(getActivity()).inflate(R.layout.pop_school,null,false);
             popView.findViewById(R.id.tvPopSchool).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "我的学校", Toast.LENGTH_SHORT).show();
+                    tvSchool.setText("我的学校");
                     popupWindow.dismiss();
                 }
             });
@@ -87,24 +134,17 @@ public class PublishFragment extends BaseFragment {
             popView.findViewById(R.id.tvPopOther).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), "其他的学校", Toast.LENGTH_SHORT).show();
+                    tvSchool.setText("其他学校");
                     popupWindow.dismiss();
                 }
             });
             popupWindow=new PopupWindow(popView, ScreenUtil.dip2px(200), ScreenUtil.dip2px(100));
             popupWindow.setTouchable(true);
-            popupWindow.showAtLocation(v,Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,ScreenUtil.dip2px(51)+ScreenUtil.getStatusBarHeight(getActivity()));
+            popupWindow.showAtLocation(v,Gravity.LEFT|Gravity.TOP,0,ScreenUtil.dip2px(51)+ScreenUtil.getStatusBarHeight(getActivity()));
         }else{
-            popupWindow.showAtLocation(v,Gravity.CENTER_HORIZONTAL|Gravity.TOP,0,ScreenUtil.dip2px(51)+ScreenUtil.getStatusBarHeight(getActivity()));
+            popupWindow.showAtLocation(v,Gravity.LEFT|Gravity.TOP,0,ScreenUtil.dip2px(51)+ScreenUtil.getStatusBarHeight(getActivity()));
+
         }
     }
 
-    private List<String> initData() {
-        List<String> list=new ArrayList<>();
-        for(int i=0;i<20;i++){
-            String item="这是-name"+ i ;
-            list.add(item);
-        }
-        return list;
-    }
 }

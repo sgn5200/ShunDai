@@ -1,16 +1,17 @@
 package com.cqutprint.shundai.mvc.task;
 
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
 import com.cqutprint.shundai.login.SplashAdapter;
+import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.widget.PullRefreshLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
 
@@ -24,30 +25,24 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
-public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRefreshListener{
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private ViewPager pager;
     private View[] ivIndicator;
     private ArrayList<View> views;
+    private TextView titleCenter;
+    private ImageView titleRight;
 
     RecyclerAdapter adapter;
-
     PullRefreshLayout pullLayout;
 
-
-    public static TaskFragment newInstance(String param1, String param2) {
+    public static TaskFragment newInstance() {
         TaskFragment fragment = new TaskFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
-    public TaskFragment(){
-        TAG=getClass().getSimpleName();
+    public TaskFragment() {
+        TAG = getClass().getSimpleName();
     }
 
 
@@ -55,26 +50,56 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
     public int getRootLayoutId() {
         return R.layout.fragment_task;
     }
+
     @Override
     protected void initView() {
-        pullLayout=bind(R.id.pullLayout);
+        titleCenter = bind(R.id.tvTitle);
+        titleCenter.setText("任务");
+
+        titleRight = bind(R.id.titleRight);
+        titleRight.setImageResource(R.mipmap.fold);
+        titleRight.setOnClickListener(this);
+
+        pullLayout = bind(R.id.pullLayout);
         pullLayout.setOnRefreshListener(this);
         pullLayout.setFinishRefreshToPauseDuration(800);
 
         View header = LayoutInflater.from(getActivity()).inflate(R.layout.recycler_header, null);
         setHeader(header);
         View footer = LayoutInflater.from(getActivity()).inflate(R.layout.recyler_footer, pullLayout, false);
-        adapter = new TaskAdapter(setList(),null);
+        adapter = new TaskAdapter(setList("短消息"), null);
         adapter.setHeaderView(header);
         adapter.setFooterView(footer);
+
         pullLayout.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.titleRight:
+                showToast("发布任务没有做");
+                break;
+            case R.id.allTask:
+                showToast("任务列表没有做");
+                break;
+
+            case R.id.myPublish:
+                showToast("我的发布没有做");
+                break;
+
+            case R.id.myTask:
+                showToast("我的任务没有做");
+
+                break;
+        }
     }
 
     //  设置布局中的头
     private void setHeader(View header) {
         pager = (ViewPager) header.findViewById(R.id.viewPager);
-        ivIndicator = new View[]{ header.findViewById(R.id.ivIndicator1),header.findViewById(R.id.ivIndicator2),header.findViewById(R.id.ivIndicator3)};
+        ivIndicator = new View[]{header.findViewById(R.id.ivIndicator1), header.findViewById(R.id.ivIndicator2), header.findViewById(R.id.ivIndicator3)};
         ImageView iv1 = new ImageView(getActivity());
         ImageView iv2 = new ImageView(getActivity());
         ImageView iv3 = new ImageView(getActivity());
@@ -105,6 +130,8 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
             }
         });
 
+        initListener(this, header.findViewById(R.id.myTask), header.findViewById(R.id.myPublish), header.findViewById(R.id.allTask));
+
         timerInterval();
 
     }
@@ -112,51 +139,59 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
     /**
      * 广告轮询播放，时间间隔2秒
      */
-    private void timerInterval(){
-        Observable.interval(0,2, TimeUnit.SECONDS)
+    private void timerInterval() {
+        Observable.interval(0, 2, TimeUnit.SECONDS)
                 .compose(this.<Long>bindUntilEvent(FragmentEvent.DESTROY_VIEW))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
-            @Override
-            public void call(Long aLong) {
-                if (pager != null) {
-                    pager.setCurrentItem((int)(aLong% 3));
-                }
-            }
-        });
+                    @Override
+                    public void call(Long aLong) {
+                        if (pager != null) {
+                            pager.setCurrentItem((int) (aLong % 3));
+                        }
+                    }
+                });
 
     }
 
 
-    private int mCount = 1;
+    private int mCount = 5;
 
-    private List<String> setList() {
+    private List<String> setList(String msg) {
         List<String> dataList = new ArrayList<>();
-        int start = 20 * (mCount - 1);
-        for (int i = start; i < 20 * mCount; i++) {
-            dataList.add("Frist" + i);
+        for (int i = 0; i < mCount; i++) {
+            dataList.add(String.format("收到 %s 条新消息,%s", i, msg));
         }
         return dataList;
     }
 
     @Override
     public void onRefresh() {
-        if (flagIsOnLoadMore){
-            flagIsOnLoadMore=false;
-            return;
-        }
         Toast.makeText(getContext(), "刷新数据", Toast.LENGTH_SHORT).show();
+
+
         pullLayout.setRefreshing(true);
     }
 
     @Override
     public void onLoadMore() {
-        flagIsOnLoadMore=true;
-        Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
-        pullLayout.setRefreshing(true,true);
+        Observable.just(setList("新消息")).compose(this.<List<String>>bindToLifecycle())
+                .delay(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> strings) {
+                        adapter.dataAppend(strings);
+                        pullLayout.onLoadFinish();
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Log.e(TAG, throwable.getMessage());
+                    }
+                });
 
     }
-
-    boolean flagIsOnLoadMore=false;
 }

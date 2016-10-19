@@ -19,8 +19,9 @@
 
     <ProgressBar
         android:id="@+id/pb_view"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:indeterminateDrawable="@drawable/progress_small"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/text_view"
         android:layout_toStartOf="@id/text_view" />

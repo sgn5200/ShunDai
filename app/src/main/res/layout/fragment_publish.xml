@@ -1,42 +1,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#aadaf9e6">
+    android:layout_height="match_parent">
+
 
     <RelativeLayout
-        android:id="@+id/title"
+        android:id="@+id/titleContent"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/colorPrimaryDark"
+        android:paddingLeft="@dimen/px_16.0_dp"
+        android:paddingRight="@dimen/px_16.0_dp">
 
-        <TextView
-            android:id="@+id/titleMsg"
-            style="@style/titileBar"
-            android:text="title" />
 
         <ImageView
             android:id="@+id/ivSpiner"
-            android:src="@mipmap/back_blue"
-            android:layout_width="@dimen/px_30.0_dp"
-            android:layout_height="@dimen/px_30.0_dp"
-            android:layout_alignTop="@+id/titleMsg"
-            android:layout_toRightOf="@+id/titleMsg"
-            android:layout_toEndOf="@+id/titleMsg" />
+            android:layout_width="@dimen/px_24.0_dp"
+            android:layout_height="@dimen/px_24.0_dp"
+            android:layout_marginLeft="@dimen/px_16.0_dp"
+            android:layout_marginTop="@dimen/px_10.0_dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/tvTitle"
+            android:src="@mipmap/share" />
+
+        <TextView
+            android:id="@+id/tvSchool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivSpiner"
+            android:text="我的学校" />
+
+        <com.cqutprint.shundai.widget.CustomTitle
+            android:id="@+id/publishTitle"
+            android:layout_width="@dimen/px_140.0_dp"
+            android:layout_height="@dimen/px_40.0_dp"
+            android:layout_centerInParent="true" />
 
         <ImageView
-            android:id="@+id/ivEdit"
-            android:src="@mipmap/write_blue"
-            android:layout_width="@dimen/px_30.0_dp"
-            android:layout_height="@dimen/px_30.0_dp"
-            android:layout_centerVertical="true"
+            android:id="@+id/titleRight"
+            android:layout_width="@dimen/px_40.0_dp"
+            android:layout_height="@dimen/px_40.0_dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:src="@mipmap/fold" />
+
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvPublish"
-        android:layout_below="@+id/title"
+    <com.cqutprint.shundai.widget.PullRefreshLayout
+        android:id="@+id/recyclerPublish"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleContent" />
 </RelativeLayout>

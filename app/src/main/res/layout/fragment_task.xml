@@ -6,7 +6,7 @@
 
     <com.cqutprint.shundai.widget.PullRefreshLayout
         android:id="@+id/pullLayout"
-        android:layout_below="@+id/title"
+        android:layout_below="@+id/titleContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

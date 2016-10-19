@@ -8,6 +8,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.cqutprint.shundai.utils.Log;
 import com.trello.rxlifecycle.components.support.RxFragment;
@@ -148,4 +149,24 @@ public abstract class BaseFragment extends RxFragment{
             view.setOnClickListener(listener);
         }
     }
+
+    /**
+     * 显示一个提示信息
+     *
+     * @param msg
+     */
+    protected void showToast(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 显示一个提示信息
+     *
+     * @param strId 显示信息在XML中ID
+     */
+    protected void showToast(int strId) {
+        Toast.makeText(getActivity(), strId, Toast.LENGTH_SHORT).show();
+    }
+
+
 }

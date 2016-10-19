@@ -140,17 +140,7 @@ public class PullRefreshLayout extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        if (!isEnabled() || isRefreshing) {
-            return false;
-        }
-
-        if (!ViewCompat.canScrollVertically(mTarget2, 1)) {
-            isRefreshing = true;
-            mListener.onLoadMore();
-            return false;
-        }
-
-        if (canChildScrollUp()) {
+        if (!isEnabled() || isRefreshing || canChildScrollUp()) {
             return false;
         }
 
@@ -514,6 +504,28 @@ public class PullRefreshLayout extends ViewGroup {
     public void setAdapter(RecyclerAdapter adapter) {
         recyclerView.setAdapter(adapter);
         this.adapter = adapter;
+
+        View footer=adapter.getFooterView();
+         tvLoadMore= (TextView) footer.findViewById(R.id.tvLoadMore);
+         bar= (ProgressBar) footer.findViewById(R.id.progressLoadMore);
+        tvLoadMore.setText("加载更多");
+        tvLoadMore.setVisibility(VISIBLE);
+        bar.setVisibility(GONE);
+
+        footer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              tvLoadMore.setVisibility(INVISIBLE);
+                bar.setVisibility(VISIBLE);
+                mListener.onLoadMore();
+            }
+        });
+
+    }
+
+    public void onLoadFinish(){
+        tvLoadMore.setVisibility(VISIBLE);
+        bar.setVisibility(GONE);
     }
 
     public void setItemDecoration(int space) {
@@ -524,6 +536,8 @@ public class PullRefreshLayout extends ViewGroup {
     private ProgressBar progressBar;
     private TextView tvLoad;
     private ImageView ivLoad;
+    private TextView tvLoadMore;
+    ProgressBar bar;
 
     private void initRefresh() {
         progressBar = (ProgressBar) refreshHeader.findViewById(R.id.pb_view);
@@ -531,7 +545,7 @@ public class PullRefreshLayout extends ViewGroup {
         tvLoad.setText("下拉刷新");
         ivLoad = (ImageView) refreshHeader.findViewById(R.id.image_view);
         ivLoad.setVisibility(View.VISIBLE);
-        ivLoad.setImageResource(R.mipmap.v2female);
+        ivLoad.setImageResource(R.mipmap.load);
         progressBar.setVisibility(View.GONE);
     }
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_task_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e4e6e5"
+    android:orientation="vertical"
+    tools:context="com.cqutprint.shundai.mvc.TaskDetailsActivity">
+
+    <include layout="@layout/bar_title" />
+
+    <include layout="@layout/user_item" />
+
+    <include layout="@layout/view_line" />
+
+    <TextView
+        android:id="@+id/tvPublishMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/px_10.0_dp"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/px_16.0_dp"
+        android:paddingRight="@dimen/px_16.0_dp"
+        android:text="aaaaaaaaaaa" />
+
+    <FrameLayout
+        android:id="@+id/publishImageContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/px_16.0_dp"
+        android:layout_marginRight="@dimen/px_16.0_dp"
+        android:background="@color/white" />
+
+    <LinearLayout style="@style/item_details">
+        <ImageView
+            android:id="@+id/ivDestination"
+            android:layout_width="@dimen/px_30.0_dp"
+            android:layout_height="@dimen/px_30.0_dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/destination" />
+        <TextView
+            android:id="@+id/tvDestination"
+            style="@style/text_view_grivity"
+            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    </LinearLayout>
+    <include layout="@layout/view_line" />
+    <LinearLayout style="@style/item_details">
+        <ImageView
+            android:layout_width="@dimen/px_30.0_dp"
+            android:layout_height="@dimen/px_30.0_dp"
+            android:src="@mipmap/attach" />
+        <TextView
+            android:id="@+id/tvAttach"
+            style="@style/text_view_grivity"
+            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    </LinearLayout>
+    <include layout="@layout/view_line" />
+
+    <LinearLayout style="@style/item_details">
+        <ImageView
+            android:layout_width="@dimen/px_30.0_dp"
+            android:layout_height="@dimen/px_30.0_dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/online" />
+        <TextView
+            android:id="@+id/tvOnline"
+            style="@style/text_view_grivity"
+            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    </LinearLayout>
+
+    <com.cqutprint.shundai.widget.PullRefreshLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="@dimen/px_1.0_dp"/>
+</LinearLayout>

@@ -69,6 +69,8 @@ public class CustomTitle extends RelativeLayout{
                 if(listener!=null){
                     listener.changed(true);
                 }
+                tvLeft.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvRight.setTextColor(getResources().getColor(R.color.white));
             }
         });
         tvRight.setOnClickListener(new OnClickListener() {
@@ -79,6 +81,8 @@ public class CustomTitle extends RelativeLayout{
                     listener.changed(false);
                 }
                 tvRight.setBackground(getResources().getDrawable(R.drawable.right_corners));
+                tvRight.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tvLeft.setTextColor(getResources().getColor(R.color.white));
                 tvLeft.setBackground(null);
             }
         });
@@ -90,5 +94,10 @@ public class CustomTitle extends RelativeLayout{
 
     public interface TitleChangeListener{
         void changed(boolean isLeftSelected);
+    }
+
+    public void setText(String left,String right){
+        tvLeft.setText(left);
+        tvRight.setText(right);
     }
 }
