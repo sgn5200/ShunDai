@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativeLayout"
-        android:layout_marginLeft="@dimen/px_80.0_dp"
+        android:layout_marginLeft="@dimen/px_70.0_dp"
         android:text="message1111111111111111111111"
         android:textSize="@dimen/px_20.0_dp"/>
 

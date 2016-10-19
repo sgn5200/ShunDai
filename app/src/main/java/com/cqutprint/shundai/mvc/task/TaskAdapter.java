@@ -34,3 +34,4 @@ public class TaskAdapter extends RecyclerAdapter<String,TaskHolder>{
         return new TaskHolder(parent, R.layout.item_publish);
     }
 }
+

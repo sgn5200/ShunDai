@@ -86,11 +86,9 @@ public class Log {
      */
     private static String rebuildMsg(StackTraceElement stackTraceElement, String msg) {
         StringBuffer sb = new StringBuffer();
-        sb.append(" <--GuangNeng--> "+stackTraceElement.getFileName());
-        sb.append(" (");
-        sb.append(stackTraceElement.getLineNumber());
-        sb.append(") ");
+        sb.append(" <--GuangNeng--> ");
         sb.append(stackTraceElement.getMethodName());
+        sb.append(stackTraceElement.getLineNumber());
         sb.append(" : ");
         sb.append(msg);
         return sb.toString();

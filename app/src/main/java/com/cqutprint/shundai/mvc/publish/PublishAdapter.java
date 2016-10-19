@@ -31,9 +31,9 @@ public class PublishAdapter extends RecyclerAdapter<String,MyHolder> {
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if(viewType==TYPE_HEADER && getHeaderView() !=null){
-            return new MyHolder(getHeaderView());
+            return new MyHolder(getHeaderView(),TYPE_HEADER);
         }else if(viewType==TYPE_FOOTER  && getFooterView() !=null){
-            return new MyHolder(getFooterView());
+            return new MyHolder(getFooterView(),TYPE_HEADER);
         }else
             return new MyHolder(parent, R.layout.item_publish);
     }
@@ -43,9 +43,11 @@ public class PublishAdapter extends RecyclerAdapter<String,MyHolder> {
 class MyHolder extends RecyclerAdapter.BaseHolder<String> {
 
     TextView textView, textView2;
+    int type;
 
-    public MyHolder(View view){
+    public MyHolder(View view,int type){
         super(view);
+        this.type=type;
     }
 
     public MyHolder(ViewGroup parent, @LayoutRes int resId) {
@@ -57,7 +59,8 @@ class MyHolder extends RecyclerAdapter.BaseHolder<String> {
     @Override
     public void setData(String data) {
         textView.setText(data);
-        textView2.setText("hello");
+        if(type==0)
+        textView2.setText("hello  ");
     }
 }
 

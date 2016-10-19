@@ -20,7 +20,7 @@
             android:layout_marginTop="@dimen/px_10.0_dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/tvTitle"
+            android:layout_alignTop="@+id/titleTvCenter"
             android:src="@mipmap/share" />
 
         <TextView
@@ -33,11 +33,11 @@
         <com.cqutprint.shundai.widget.CustomTitle
             android:id="@+id/publishTitle"
             android:layout_width="@dimen/px_140.0_dp"
-            android:layout_height="@dimen/px_40.0_dp"
+            android:layout_height="@dimen/px_34.0_dp"
             android:layout_centerInParent="true" />
 
         <ImageView
-            android:id="@+id/titleRight"
+            android:id="@+id/titleIvRight"
             android:layout_width="@dimen/px_40.0_dp"
             android:layout_height="@dimen/px_40.0_dp"
             android:layout_alignParentEnd="true"

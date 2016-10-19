@@ -107,7 +107,7 @@ public abstract class BaseActivity extends FragmentActivity {
      */
     protected void lunchActivity(Class<?> className) {
         startActivity(new Intent(this, className));
-        overridePendingTransition(R.anim.lunch_in, R.anim.lunch_out);
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     /**
@@ -161,5 +161,11 @@ public abstract class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.i(TAG);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.push_right_out);
     }
 }

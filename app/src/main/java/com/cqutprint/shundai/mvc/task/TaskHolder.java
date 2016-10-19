@@ -17,15 +17,17 @@ public class TaskHolder extends RecyclerAdapter.BaseHolder<String> {
         super(parent, resId);
     }
 
+    int type;
     public TaskHolder (View view){
         super(view);
     }
 
     @Override
     public void setData(String data) {
+
         TextView tvName=getView(R.id.tvName);
         TextView tvMessage=getView(R.id.tvMessage);
         tvName.setText(data);
-        tvMessage.setText(data+" message");
+        tvMessage.setText(data+" message type   "+ type);
     }
 }

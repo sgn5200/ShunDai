@@ -28,7 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.SplashActivity" />
-        <activity android:name=".mvc.TaskDetailsActivity"></activity>
+        <activity android:name=".mvc.TaskDetailsActivity" />
+        <activity android:name=".mvc.PublishMessageActivity"></activity>
     </application>
 
 </manifest>

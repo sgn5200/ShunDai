@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cqutprint.shundai.mvc.PublishMessageActivity">
+
+    <include layout="@layout/bar_title"/>
+
+    <EditText
+        android:id="@+id/ivMessage"
+        android:background="@drawable/board_width_grey"
+        android:padding="@dimen/px_5.0_dp"
+        android:textSize="@dimen/px_18.0_dp"
+        android:hint="谁家那小谁，都是二十锒铛岁..."
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/px_100.0_dp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/pictureContent"
+        android:orientation="horizontal"
+        android:padding="@dimen/px_15.0_dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivAddPicture"
+            android:src="@mipmap/icon_addpic_focused"
+            android:layout_width="@dimen/px_80.0_dp"
+            android:layout_height="@dimen/px_80.0_dp" />
+        </LinearLayout>
+
+</LinearLayout>

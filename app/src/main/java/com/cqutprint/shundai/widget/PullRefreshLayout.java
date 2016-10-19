@@ -116,8 +116,6 @@ public class PullRefreshLayout extends ViewGroup {
         mTotalDragDistance = (int) (mRefreshView.getMeasuredHeight() * 0.8f);
     }
 
-    private View mTarget2;
-
     private void ensureTarget() {
         if (mTarget != null)
             return;
@@ -128,7 +126,6 @@ public class PullRefreshLayout extends ViewGroup {
                     mTarget = child;
                 }
             }
-            mTarget2 = getChildAt(getChildCount() - 1);
         }
     }
 
@@ -499,15 +496,17 @@ public class PullRefreshLayout extends ViewGroup {
         return recyclerView;
     }
 
-    private RecyclerAdapter adapter;
+    public void setAdapter(RecyclerView.Adapter adapter){
+        recyclerView.setAdapter(adapter);
+    }
 
     public void setAdapter(RecyclerAdapter adapter) {
-        recyclerView.setAdapter(adapter);
-        this.adapter = adapter;
 
-        View footer=adapter.getFooterView();
-         tvLoadMore= (TextView) footer.findViewById(R.id.tvLoadMore);
-         bar= (ProgressBar) footer.findViewById(R.id.progressLoadMore);
+
+        recyclerView.setAdapter(adapter);
+        View footer = adapter.getFooterView();
+        tvLoadMore = (TextView) footer.findViewById(R.id.tvLoadMore);
+        bar = (ProgressBar) footer.findViewById(R.id.progressLoadMore);
         tvLoadMore.setText("加载更多");
         tvLoadMore.setVisibility(VISIBLE);
         bar.setVisibility(GONE);
@@ -515,15 +514,14 @@ public class PullRefreshLayout extends ViewGroup {
         footer.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-              tvLoadMore.setVisibility(INVISIBLE);
+                tvLoadMore.setVisibility(INVISIBLE);
                 bar.setVisibility(VISIBLE);
                 mListener.onLoadMore();
             }
         });
-
     }
 
-    public void onLoadFinish(){
+    public void onLoadFinish() {
         tvLoadMore.setVisibility(VISIBLE);
         bar.setVisibility(GONE);
     }
@@ -550,7 +548,6 @@ public class PullRefreshLayout extends ViewGroup {
     }
 
     private void onRefresh() {
-
         mListener.onRefresh();
         tvLoad.setText("正在刷新");
         ivLoad.setVisibility(View.INVISIBLE);

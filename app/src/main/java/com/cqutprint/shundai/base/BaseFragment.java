@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.utils.Log;
 import com.trello.rxlifecycle.components.support.RxFragment;
 
@@ -81,6 +82,8 @@ public abstract class BaseFragment extends RxFragment{
     }
 
 
+
+
     /**
      * 启动Activity 不带参数
      *
@@ -88,6 +91,7 @@ public abstract class BaseFragment extends RxFragment{
      */
     protected void lunchActivity(Class<?> className) {
         startActivity(new Intent(getActivity(), className));
+        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     /**
@@ -101,6 +105,7 @@ public abstract class BaseFragment extends RxFragment{
             intent.putExtras(bundle);
         }
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     /**

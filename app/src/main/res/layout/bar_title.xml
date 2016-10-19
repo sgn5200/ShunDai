@@ -6,20 +6,23 @@
     android:background="@color/colorPrimaryDark">
 
     <ImageView
-        android:id="@+id/titleLeft"
+        android:id="@+id/titleIvLeft"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:src="@mipmap/left_back"
         android:layout_margin="@dimen/px_5.0_dp"
-        android:layout_width="@dimen/px_50.0_dp"
-        android:layout_height="@dimen/px_50.0_dp" />
+        android:visibility="gone"
+        android:layout_width="@dimen/px_30.0_dp"
+        android:layout_height="@dimen/px_30.0_dp" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/titleTvCenter"
         style="@style/titileBar"
         android:text="title" />
 
     <ImageView
-        android:id="@+id/titleRight"
+        android:id="@+id/titleIvRight"
+        android:visibility="gone"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/px_5.0_dp"

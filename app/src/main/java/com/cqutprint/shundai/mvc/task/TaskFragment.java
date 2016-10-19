@@ -1,5 +1,6 @@
 package com.cqutprint.shundai.mvc.task;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
 import com.cqutprint.shundai.login.SplashAdapter;
+import com.cqutprint.shundai.mvc.TaskDetailsActivity;
 import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.widget.PullRefreshLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
@@ -53,10 +55,12 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
 
     @Override
     protected void initView() {
-        titleCenter = bind(R.id.tvTitle);
+        titleCenter = bind(R.id.titleTvCenter);
         titleCenter.setText("任务");
 
-        titleRight = bind(R.id.titleRight);
+
+        titleRight = bind(R.id.titleIvRight);
+        titleRight.setVisibility(View.VISIBLE);
         titleRight.setImageResource(R.mipmap.fold);
         titleRight.setOnClickListener(this);
 
@@ -70,15 +74,25 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
         adapter = new TaskAdapter(setList("短消息"), null);
         adapter.setHeaderView(header);
         adapter.setFooterView(footer);
-
+        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Object holder) {
+                String s;
+                if(holder instanceof RecyclerAdapter.BaseHolder){
+                    s= (String) adapter.getItem((RecyclerAdapter.BaseHolder) holder);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("key",s);
+                    lunchActivity(TaskDetailsActivity.class,bundle);
+                }
+            }
+        });
         pullLayout.setAdapter(adapter);
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.titleRight:
+            case R.id.titleIvRight:
                 showToast("发布任务没有做");
                 break;
             case R.id.allTask:
@@ -156,11 +170,9 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
     }
 
 
-    private int mCount = 5;
-
     private List<String> setList(String msg) {
         List<String> dataList = new ArrayList<>();
-        for (int i = 0; i < mCount; i++) {
+        for (int i =0; i <5; i++) {
             dataList.add(String.format("收到 %s 条新消息,%s", i, msg));
         }
         return dataList;

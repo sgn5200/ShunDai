@@ -1,15 +1,14 @@
 package com.cqutprint.shundai.login;
 
-import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.cqutprint.shundai.base.MainActivity;
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseActivity;
+import com.cqutprint.shundai.base.MainActivity;
 import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.utils.ShareUtils;
 
@@ -37,7 +36,7 @@ public class SplashActivity extends BaseActivity {
         pageViews.get(indicator.size()-1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                lunchActivity( MainActivity.class);
                 finish();
             }
         });

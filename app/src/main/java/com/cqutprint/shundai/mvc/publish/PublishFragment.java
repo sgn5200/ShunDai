@@ -1,5 +1,6 @@
 package com.cqutprint.shundai.mvc.publish;
 
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
+import com.cqutprint.shundai.mvc.PublishMessageActivity;
+import com.cqutprint.shundai.mvc.TaskDetailsActivity;
 import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.utils.ScreenUtil;
 import com.cqutprint.shundai.widget.CustomTitle;
@@ -24,13 +27,14 @@ import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
-public class PublishFragment extends BaseFragment implements PullRefreshLayout.OnRefreshListener,View.OnClickListener {
+public class PublishFragment extends BaseFragment implements PullRefreshLayout.OnRefreshListener, View.OnClickListener {
     private PullRefreshLayout pullLayout;
     private CustomTitle customTitle;
 
     private TextView tvSchool;
 
-    private  RecyclerAdapter adapter;
+    private RecyclerAdapter adapter;
+
     public static PublishFragment newInstance() {
         PublishFragment fragment = new PublishFragment();
         return fragment;
@@ -43,26 +47,34 @@ public class PublishFragment extends BaseFragment implements PullRefreshLayout.O
 
     @Override
     protected void initView() {
-        pullLayout=bind(R.id.recyclerPublish);
-        tvSchool=bind(R.id.tvSchool);
-        customTitle=bind(R.id.publishTitle);
-        customTitle.setText("所有","我的");
+        pullLayout = bind(R.id.recyclerPublish);
+        tvSchool = bind(R.id.tvSchool);
+        customTitle = bind(R.id.publishTitle);
+        customTitle.setText("所有", "我的");
         customTitle.addChangeListener(new CustomTitle.TitleChangeListener() {
             @Override
             public void changed(boolean isLeftSelected) {
-                showToast("你选了-->" +(isLeftSelected?"左边":"右边"));
+                showToast("你选了-->" + (isLeftSelected ? "左边" : "右边"));
             }
         });
 
-        initListener(this,R.id.titleRight,R.id.ivSpiner);
+        initListener(this, R.id.titleIvRight, R.id.ivSpiner);
 
-        List<String> listData=initData("初始化");
-         adapter=new PublishAdapter(listData,null);
+        List<String> listData = initData("初始化");
+        adapter = new PublishAdapter(listData, null);
         pullLayout.setOnRefreshListener(this);
-         pullLayout.setFinishRefreshToPauseDuration(800);
+        pullLayout.setFinishRefreshToPauseDuration(800);
 
         View footer = LayoutInflater.from(getActivity()).inflate(R.layout.recyler_footer, pullLayout, false);
         adapter.setFooterView(footer);
+        adapter.setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Object holder) {
+                Bundle bundle = new Bundle();
+                bundle.putString("key", (String) adapter.getItem((RecyclerAdapter.BaseHolder) holder));
+                lunchActivity(TaskDetailsActivity.class, bundle);
+            }
+        });
         pullLayout.setAdapter(adapter);
         pullLayout.setItemDecoration(10);
     }
@@ -70,20 +82,20 @@ public class PublishFragment extends BaseFragment implements PullRefreshLayout.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ivSpiner:
                 openPopWindow(v);
                 break;
-            case R.id.titleRight:
-                showToast("发说说还没做");
+            case R.id.titleIvRight:
+                lunchActivity(PublishMessageActivity.class);
                 break;
         }
     }
 
     private List<String> initData(String msg) {
-        List<String> list=new ArrayList<>();
-        for(int i=0;i<5;i++){
-            String item="这是-publish "+ i +"  "+ msg;
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            String item = "这是-publish " + i + "  " + msg;
             list.add(item);
         }
         return list;
@@ -118,11 +130,11 @@ public class PublishFragment extends BaseFragment implements PullRefreshLayout.O
     }
 
 
-
     PopupWindow popupWindow;
+
     private void openPopWindow(View v) {
-        if(popupWindow==null){
-            View popView=LayoutInflater.from(getActivity()).inflate(R.layout.pop_school,null,false);
+        if (popupWindow == null) {
+            View popView = LayoutInflater.from(getActivity()).inflate(R.layout.pop_school, null, false);
             popView.findViewById(R.id.tvPopSchool).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -138,11 +150,11 @@ public class PublishFragment extends BaseFragment implements PullRefreshLayout.O
                     popupWindow.dismiss();
                 }
             });
-            popupWindow=new PopupWindow(popView, ScreenUtil.dip2px(200), ScreenUtil.dip2px(100));
+            popupWindow = new PopupWindow(popView, ScreenUtil.dip2px(200), ScreenUtil.dip2px(100));
             popupWindow.setTouchable(true);
-            popupWindow.showAtLocation(v,Gravity.LEFT|Gravity.TOP,0,ScreenUtil.dip2px(51)+ScreenUtil.getStatusBarHeight(getActivity()));
-        }else{
-            popupWindow.showAtLocation(v,Gravity.LEFT|Gravity.TOP,0,ScreenUtil.dip2px(51)+ScreenUtil.getStatusBarHeight(getActivity()));
+            popupWindow.showAtLocation(v, Gravity.LEFT | Gravity.TOP, 0, ScreenUtil.dip2px(51) + ScreenUtil.getStatusBarHeight(getActivity()));
+        } else {
+            popupWindow.showAtLocation(v, Gravity.LEFT | Gravity.TOP, 0, ScreenUtil.dip2px(51) + ScreenUtil.getStatusBarHeight(getActivity()));
 
         }
     }
