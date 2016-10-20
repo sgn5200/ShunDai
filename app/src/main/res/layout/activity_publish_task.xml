@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_publish_task"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cqutprint.shundai.ui.PublishTaskActivity">
+
+
+    <include layout="@layout/bar_title" />
+
+    <EditText
+        android:id="@+id/etTask"
+        style="@style/paddingParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:gravity="top"
+        android:hint="@string/hint_publish_task"
+        android:minHeight="@dimen/px_100.0_dp"
+        android:textSize="@dimen/sizeSecondLevel" />
+
+    <include layout="@layout/view_line" />
+
+    <LinearLayout
+        style="@style/paddingParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/px_100.0_dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/text_location"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+
+            android:hint="@string/hint_task_location"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+    </LinearLayout>
+
+    <include layout="@layout/view_space" />
+
+    <LinearLayout
+        style="@style/paddingParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/px_100.0_dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/text_task_remark"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+
+            android:hint="@string/hint_task_remark"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+    </LinearLayout>
+
+    <include layout="@layout/view_line" />
+
+    <LinearLayout
+        style="@style/paddingParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/px_100.0_dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/text_task_pay"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:inputType="number"
+
+            android:textSize="@dimen/sizeSecondLevel" />
+
+    </LinearLayout>
+
+    <include layout="@layout/view_space" />
+
+    <LinearLayout
+        style="@style/paddingParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/px_100.0_dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/text_phone_number"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/hint_phone_number"
+
+            android:inputType="number"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+    </LinearLayout>
+
+    <include layout="@layout/view_line" />
+
+    <LinearLayout
+        style="@style/paddingParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/px_100.0_dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/text_task_linkman"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+
+            android:hint="@string/hint_task_linkman"
+            android:textSize="@dimen/sizeSecondLevel" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px_140.0_dp"
+        android:autoLink="all"
+        android:gravity="bottom|center_horizontal"
+        android:text="@string/text_task_help"
+        android:textColor="#aaaa" />
+
+</LinearLayout>

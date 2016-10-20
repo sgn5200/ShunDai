@@ -111,6 +111,20 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     /**
+     * 启动Activity 带参数
+     *
+     * @param className
+     */
+    protected void lunchActivity(Class<?> className, Bundle bundle) {
+        Intent intent = new Intent(this, className);
+        if (null != bundle) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+    }
+
+    /**
      * 生命周期 ：创建
      * @param savedInstanceState
      */

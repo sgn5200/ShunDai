@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.mvc.message;
+package com.cqutprint.shundai.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +8,7 @@ import android.view.View;
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
-import com.cqutprint.shundai.mvc.publish.PublishAdapter;
+import com.cqutprint.shundai.adapter.PublishAdapter;
 import com.cqutprint.shundai.widget.CustomTitle;
 
 import java.util.ArrayList;

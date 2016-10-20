@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-import com.cqutprint.shundai.base.MainActivity;
+import com.cqutprint.shundai.ui.MainActivity;
 import com.cqutprint.shundai.utils.ShareUtils;
 
 public class WelcomeActivity extends AppCompatActivity {

@@ -461,10 +461,7 @@ public class PullRefreshLayout extends ViewGroup {
         int top = getPaddingTop();
         int right = getPaddingRight();
         int bottom = getPaddingBottom();
-
-        //mTarget MATCH_PARENT
         mTarget.layout(left, top + mCurrentOffsetTop, left + width - right, top + height - bottom + mCurrentOffsetTop);
-        //mRefreshView隐藏在mTarget的上面
         mRefreshView.layout(left, top - mRefreshView.getMeasuredHeight() + mCurrentOffsetTop, left + width - right, top + mCurrentOffsetTop - bottom);
     }
 
@@ -496,13 +493,7 @@ public class PullRefreshLayout extends ViewGroup {
         return recyclerView;
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter){
-        recyclerView.setAdapter(adapter);
-    }
-
     public void setAdapter(RecyclerAdapter adapter) {
-
-
         recyclerView.setAdapter(adapter);
         View footer = adapter.getFooterView();
         tvLoadMore = (TextView) footer.findViewById(R.id.tvLoadMore);

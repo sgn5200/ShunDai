@@ -3,4 +3,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_publish_task">帮取快递，食堂带饭，取水果，代买等......</string>
+    <string name="text_location">送达地址</string>
+    <string name="hint_task_location">请填写您的送达地址</string>
+    <string name="text_task_remark">添加备注</string>
+    <string name="hint_task_remark">送到宿舍 代为保管  超过十斤</string>
+    <string name="text_task_pay">打赏路费</string>
+    <string name="text_phone_number">电话号码</string>
+    <string name="hint_phone_number">输入电话号码</string>
+    <string name="text_task_linkman">联系人姓名</string>
+    <string name="hint_task_linkman">输入联系人姓名</string>
+    <string name="text_task_help"> <u>发单建议</u> </string>
+    <string name="publish_task">发布任务</string>
 </resources>

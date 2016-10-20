@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.mvc.task;
+package com.cqutprint.shundai.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -9,10 +9,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cqutprint.shundai.R;
+import com.cqutprint.shundai.adapter.TaskAdapter;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
 import com.cqutprint.shundai.login.SplashAdapter;
-import com.cqutprint.shundai.mvc.TaskDetailsActivity;
+import com.cqutprint.shundai.ui.PublishTaskActivity;
+import com.cqutprint.shundai.ui.TaskDetailsActivity;
 import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.widget.PullRefreshLayout;
 import com.trello.rxlifecycle.android.FragmentEvent;
@@ -93,14 +95,15 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.titleIvRight:
-                showToast("发布任务没有做");
+                lunchActivity(PublishTaskActivity.class);
+
                 break;
             case R.id.allTask:
                 showToast("任务列表没有做");
                 break;
 
             case R.id.myPublish:
-                showToast("我的发布没有做");
+                showToast("没有做");
                 break;
 
             case R.id.myTask:
@@ -181,7 +184,6 @@ public class TaskFragment extends BaseFragment implements PullRefreshLayout.OnRe
     @Override
     public void onRefresh() {
         Toast.makeText(getContext(), "刷新数据", Toast.LENGTH_SHORT).show();
-
 
         pullLayout.setRefreshing(true);
     }

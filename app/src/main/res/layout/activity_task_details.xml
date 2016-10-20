@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#e4e6e5"
     android:orientation="vertical"
-    tools:context="com.cqutprint.shundai.mvc.TaskDetailsActivity">
+    tools:context="com.cqutprint.shundai.ui.TaskDetailsActivity">
 
     <include layout="@layout/bar_title" />
 
@@ -41,7 +41,7 @@
             android:src="@mipmap/destination" />
         <TextView
             android:id="@+id/tvDestination"
-            style="@style/text_view_grivity"
+            style="@style/text_view_gravity"
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
     </LinearLayout>
     <include layout="@layout/view_line" />
@@ -52,7 +52,7 @@
             android:src="@mipmap/attach" />
         <TextView
             android:id="@+id/tvAttach"
-            style="@style/text_view_grivity"
+            style="@style/text_view_gravity"
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
     </LinearLayout>
     <include layout="@layout/view_line" />
@@ -65,7 +65,7 @@
             android:src="@mipmap/online" />
         <TextView
             android:id="@+id/tvOnline"
-            style="@style/text_view_grivity"
+            style="@style/text_view_gravity"
             android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
     </LinearLayout>
 

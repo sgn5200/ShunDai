@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseActivity;
-import com.cqutprint.shundai.base.MainActivity;
+import com.cqutprint.shundai.ui.MainActivity;
 import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.utils.ShareUtils;
 

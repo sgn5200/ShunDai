@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.mvc.me;
+package com.cqutprint.shundai.ui.fragment;
 
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;

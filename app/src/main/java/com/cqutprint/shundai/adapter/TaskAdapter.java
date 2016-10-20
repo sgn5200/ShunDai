@@ -1,7 +1,10 @@
-package com.cqutprint.shundai.mvc.task;
+package com.cqutprint.shundai.adapter;
 
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.RecyclerAdapter;
@@ -19,7 +22,7 @@ public class TaskAdapter extends RecyclerAdapter<String,TaskHolder>{
      * @param list     数据集合
      * @param listener 回调接口
      */
-    public TaskAdapter(@Nullable List<String> list, @Nullable OnItemClickListener<com.cqutprint.shundai.mvc.task.TaskHolder> listener) {
+    public TaskAdapter(@Nullable List<String> list, @Nullable OnItemClickListener<TaskHolder> listener) {
         super(list, listener);
     }
 
@@ -32,6 +35,28 @@ public class TaskAdapter extends RecyclerAdapter<String,TaskHolder>{
             return new TaskHolder(getFooterView());
         }else
         return new TaskHolder(parent, R.layout.item_publish);
+    }
+
+}
+
+class TaskHolder extends RecyclerAdapter.BaseHolder<String> {
+
+    public TaskHolder(ViewGroup parent, @LayoutRes int resId) {
+        super(parent, resId);
+    }
+
+    int type;
+    public TaskHolder (View view){
+        super(view);
+    }
+
+    @Override
+    public void setData(String data) {
+
+        TextView tvName=getView(R.id.tvName);
+        TextView tvMessage=getView(R.id.tvMessage);
+        tvName.setText(data);
+        tvMessage.setText(data+" message type   "+ type);
     }
 }
 

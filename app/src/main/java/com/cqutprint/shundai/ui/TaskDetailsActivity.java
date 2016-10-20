@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.mvc;
+package com.cqutprint.shundai.ui;
 
 
 import android.os.Bundle;
@@ -31,7 +31,7 @@ public class TaskDetailsActivity extends BaseActivity implements View.OnClickLis
             tvName.setText("name :"+rs);
         }
 
-        initListener(this,R.id.titleIvLeft);
+        initListener(this,R.id.titleIvLeft,R.id.personalLayout);
 
     }
 
@@ -40,6 +40,9 @@ public class TaskDetailsActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()){
             case R.id.titleIvLeft:
                 finish();
+                break;
+            case R.id.personalLayout:
+                lunchActivity(UserPreviewActivity.class);
                 break;
         }
 

@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.mvc.publish;
+package com.cqutprint.shundai.ui.fragment;
 
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,8 +10,9 @@ import android.widget.TextView;
 import com.cqutprint.shundai.R;
 import com.cqutprint.shundai.base.BaseFragment;
 import com.cqutprint.shundai.base.RecyclerAdapter;
-import com.cqutprint.shundai.mvc.PublishMessageActivity;
-import com.cqutprint.shundai.mvc.TaskDetailsActivity;
+import com.cqutprint.shundai.adapter.PublishAdapter;
+import com.cqutprint.shundai.ui.PublishMessageActivity;
+import com.cqutprint.shundai.ui.TaskDetailsActivity;
 import com.cqutprint.shundai.utils.Log;
 import com.cqutprint.shundai.utils.ScreenUtil;
 import com.cqutprint.shundai.widget.CustomTitle;

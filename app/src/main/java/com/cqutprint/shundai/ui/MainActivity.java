@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.base;
+package com.cqutprint.shundai.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -6,9 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.cqutprint.shundai.R;
-import com.cqutprint.shundai.mvc.me.MeFragment;
-import com.cqutprint.shundai.mvc.publish.PublishFragment;
-import com.cqutprint.shundai.mvc.task.TaskFragment;
+import com.cqutprint.shundai.base.BaseActivity;
+import com.cqutprint.shundai.ui.fragment.MeFragment;
+import com.cqutprint.shundai.ui.fragment.PublishFragment;
+import com.cqutprint.shundai.ui.fragment.TaskFragment;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 

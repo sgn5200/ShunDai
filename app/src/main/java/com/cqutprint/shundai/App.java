@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.base;
+package com.cqutprint.shundai;
 
 import android.app.Application;
 
@@ -42,9 +42,6 @@ public class App extends Application {
                 .setEnableCamera(true)
                 .setEnableEdit(true)
                 .setEnableCrop(true)
-                .setEnableRotate(true)
-//                .setCropSquare(true)
-//                .setEnablePreview(true)
                 .build();
         CoreConfig coreConfig = new CoreConfig.Builder(this, new GlideLoader(), theme)
                 .setFunctionConfig(functionConfig)

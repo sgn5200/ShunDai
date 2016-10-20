@@ -1,4 +1,4 @@
-package com.cqutprint.shundai.mvc.publish;
+package com.cqutprint.shundai.adapter;
 
 
 import android.support.annotation.LayoutRes;

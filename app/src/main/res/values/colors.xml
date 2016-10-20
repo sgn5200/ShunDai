@@ -9,4 +9,5 @@
 
 
     <color name="grey_line">#d000</color>
+    <color name="spaceColor">#cbcbcb</color>
 </resources>

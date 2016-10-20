@@ -2,7 +2,7 @@ package com.cqutprint.shundai.utils;
 
 import android.content.Context;
 
-import com.cqutprint.shundai.base.App;
+import com.cqutprint.shundai.App;
 
 /**
  * Created by Administrator on 2016/10/11.
